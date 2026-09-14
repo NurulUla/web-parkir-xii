@@ -38,15 +38,26 @@
                     </div>
                 @endif
 
+                <!-- Notifikasi Error Validasi -->
+                @if($errors->any())
+                    <div class="bg-rose-50 border-l-4 border-rose-500 p-3 mb-4 rounded-r-lg text-xs text-rose-700 font-medium">
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <form action="{{ route('admin.user.simpan') }}" method="POST" class="space-y-4">
                     @csrf
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Nama Lengkap</label>
-                        <input type="text" name="nama_lengkap" placeholder="Nama Petugas" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <input type="text" name="nama_lengkap" value="{{ old('nama_lengkap') }}" placeholder="Nama Petugas" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Username Login</label>
-                        <input type="text" name="username" placeholder="petugas_budi" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm lowercase focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <input type="text" name="username" value="{{ old('username') }}" placeholder="petugas_budi" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm lowercase focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Password</label>
@@ -55,9 +66,9 @@
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Hak Akses (Role)</label>
                         <select name="role" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <option value="petugas">Petugas Lapangan</option>
-                            <option value="admin">Administrator</option>
-                            <option value="owner">Owner / Pemilik</option>
+                            <option value="petugas" {{ old('role') == 'petugas' ? 'selected' : '' }}>Petugas Lapangan</option>
+                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator</option>
+                            <option value="owner" {{ old('role') == 'owner' ? 'selected' : '' }}>Owner / Pemilik</option>
                         </select>
                     </div>
                     <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition">💾 Simpan User</button>

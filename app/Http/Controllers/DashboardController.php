@@ -33,8 +33,15 @@ class DashboardController extends Controller
         $request->validate([
             'nama_lengkap' => 'required',
             'username' => 'required|unique:tb_user,username',
-            'password' => 'required',
+            'password' => 'required|min:6',
             'role' => 'required'
+        ], [
+            'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
+            'username.required' => 'Username wajib diisi.',
+            'username.unique' => 'Username ini sudah dipakai, silakan pilih username lain.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'role.required' => 'Hak akses (role) wajib dipilih.'
         ]);
 
         DB::table('tb_user')->insert([
