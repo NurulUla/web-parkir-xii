@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sistem Parkir XII</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 </head>
 <!-- 🛠️ DISINI YANG SUDAH DIGANTI: Menggunakan background-parkir.jpg -->
-<body style="background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url('{{ asset('images/parkir.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;" 
+<body style="background-image: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)), url('<?php echo e(asset('images/parkir.jpg')); ?>'); background-size: cover; background-position: center; background-repeat: no-repeat;" 
       class="flex items-center justify-center min-h-screen p-4">
 
     <!-- Card Login Putih -->
@@ -19,15 +19,16 @@
         </div>
 
         <!-- Notifikasi Error jika Gagal -->
-        @if(session('error'))
+        <?php if(session('error')): ?>
             <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-lg text-sm text-red-700">
-                {{ session('error') }}
+                <?php echo e(session('error')); ?>
+
             </div>
-        @endif
+        <?php endif; ?>
 
         <!-- Form Login -->
-        <form action="{{ route('login.proses') }}" method="POST" class="space-y-6">
-            @csrf
+        <form action="<?php echo e(route('login.proses')); ?>" method="POST" class="space-y-6">
+            <?php echo csrf_field(); ?>
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Username</label>
                 <input type="text" name="username" placeholder="Masukkan username" required
@@ -78,3 +79,4 @@
 
 </body>
 </html>
+<?php /**PATH C:\xii-reg\web-xii\parkir-xii-reguler\resources\views/auth/login.blade.php ENDPATH**/ ?>

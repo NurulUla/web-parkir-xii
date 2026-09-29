@@ -27,14 +27,14 @@ class AuthController extends Controller
             ->first();
 
         if ($user) {
-            // Simpan data ke session
+            // Simpan data ke session (Disamakan menjadi 'id_user' agar sinkron ✨)
             session([
-                'user_id' => $user->id_user, 
+                'id_user' => $user->id_user, 
                 'role' => $user->role, 
                 'nama' => $user->nama_lengkap
             ]);
             
-            // Catat log aktivitas
+            // Catat log aktivitas login
             DB::table('tb_log_aktivitas')->insert([
                 'id_user' => $user->id_user,
                 'aktivitas' => 'User berhasil login ke sistem',
@@ -49,7 +49,17 @@ class AuthController extends Controller
 
     // 3. Memproses Logout
     public function logout() {
+        // ✨ TAMBAHKAN CATATAN LOG LOGOUT SEBELUM SESSION DIHAPUS
+        if (session()->has('id_user')) {
+            DB::table('tb_log_aktivitas')->insert([
+                'id_user' => session('id_user'),
+                'aktivitas' => 'User berhasil logout dari sistem',
+                'waktu_aktivitas' => now()
+            ]);
+        }
+
+        // Hapus session dan keluar
         session()->flush();
-        return redirect()->route('login')->with('error', 'Anda telah keluar sistem.');
+        return redirect()->route('login')->with('error', 'Anda telah keluar dari sistem.');
     }
 }

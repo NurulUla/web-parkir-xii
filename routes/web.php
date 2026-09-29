@@ -67,13 +67,15 @@ Route::prefix('admin')->group(function () {
     Route::delete('/kendaraan/hapus/{id}', [DashboardController::class, 'hapusKendaraan'])
         ->name('admin.kendaraan.hapus');
 
-
     // Log Aktivitas
     Route::get('/log', [DashboardController::class, 'aksesLog'])
         ->name('admin.log');
 
     Route::delete('/log/hapus/{id}', [DashboardController::class, 'hapusLog'])
         ->name('admin.log.hapus');
+
+    Route::delete('/log/hapus-semua', [DashboardController::class, 'hapusSemuaLog'])
+        ->name('admin.log.hapusSemua');
 });
 
 
@@ -94,6 +96,10 @@ Route::prefix('petugas')->group(function () {
 
     Route::delete('/transaksi/hapus/{id}', [DashboardController::class, 'hapusTransaksi'])
         ->name('petugas.transaksi.hapus');
+
+    // TAMBAHKAN BARIS INI: Rute untuk memproses tombol Keluar & Bayar kendaraan aktif
+    Route::get('/transaksi/keluar/{id}', [DashboardController::class, 'prosesKeluar'])
+        ->name('petugas.transaksi.keluar');
 
 
     // Cetak Struk
